@@ -1,0 +1,86 @@
+
+CREATE DATABASE SANJEEVANHOSP;
+USE SANJEEVANHOSP;
+
+
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY AUTO_INCREMENT,
+    dept_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Doctor (
+    doctor_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    specialization VARCHAR(100),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+
+CREATE TABLE Patient (
+    patient_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    gender CHAR(1),
+    date_of_birth DATE,
+    contact VARCHAR(15)
+);
+
+CREATE TABLE Room (
+    room_id INT PRIMARY KEY AUTO_INCREMENT,
+    room_number VARCHAR(10),
+    room_type VARCHAR(50),
+    is_occupied BOOLEAN
+);
+
+CREATE TABLE Appointment (
+    appointment_id INT PRIMARY KEY AUTO_INCREMENT,
+    patient_id INT,
+    doctor_id INT,
+    appointment_date DATE,
+    appointment_time TIME,
+    FOREIGN KEY (patient_id) REFERENCES Patient(patient_id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctor(doctor_id)
+);
+
+
+CREATE TABLE Medical_Record (
+    record_id INT PRIMARY KEY AUTO_INCREMENT,
+    patient_id INT,
+    diagnosis TEXT,
+    treatment TEXT,
+    record_date DATE,
+    FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
+);
+
+
+
+INSERT INTO Department (dept_name) VALUES 
+('Cardiology'),
+('Neurology'),
+('Orthopedics');
+
+
+INSERT INTO Doctor (name, specialization, dept_id) VALUES
+('Dr. A Sharma', 'Cardiologist', 1),
+('Dr. B Mehta', 'Neurologist', 2),
+('Dr. C Iyer', 'Orthopedic', 3);
+
+
+INSERT INTO Patient (name, gender, date_of_birth, contact) VALUES
+('Ram Mule', 'M', '1999-07-22', '9876543210'),
+('Rutik Tembe', 'M', '2004-02-14', '9123456789');
+
+
+INSERT INTO Room (room_number, room_type, is_occupied) VALUES
+('101', 'Single', TRUE),
+('102', 'Shared', FALSE);
+
+
+INSERT INTO Appointment (patient_id, doctor_id, appointment_date, appointment_time) VALUES
+(1, 1, '2025-06-25', '10:00:00'),
+(2, 2, '2025-06-26', '11:30:00');
+
+
+INSERT INTO Medical_Record (patient_id, diagnosis, treatment, record_date) VALUES
+(1, 'High BP', 'Medication A', '2025-06-20'),
+(2, 'Migraine', 'Rest and Medication B', '2025-06-21');
